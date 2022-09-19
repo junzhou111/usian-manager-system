@@ -10,13 +10,13 @@ module.exports = defineConfig({
   lintOnSave: false,//关闭严格检查
   productionSourceMap: false,//打包时不会生成.map文件，加快打包速度
 
-  proxy: {
-    '/dev1-api': { // 代理标识, 如果出现了这个就代表需要代理
-      target: 'http://localhost:3000',
-      pathRewrite: {
-        "^/dev1-api": ''
-      }
-    }
-  }
+  // proxy: {
+  //   '/dev1-api': { // 代理标识, 如果出现了这个就代表需要代理
+  //     target: 'http://localhost:3000',
+  //     pathRewrite: {
+  //       "^/dev1-api": ''
+  //     }
+  //   }
+  // }
 })
 
