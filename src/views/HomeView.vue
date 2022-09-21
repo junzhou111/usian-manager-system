@@ -23,8 +23,8 @@ export default {
     HelloWorld
   },
   created() {
-    axios({
-      url: 'http://localhost:3000/',
+    this.$axios({
+      url: '/dev-api/',
       method: "GET"
     }).then(res => {
       console.log(res);
