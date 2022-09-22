@@ -1,27 +1,21 @@
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   transpileDependencies: true,
-  publicPath:'./',//项目打包之后白屏问题
+  publicPath: "./", //项目打包之后白屏问题
   devServer: {
-    port: 8888, //端口号
-    host: "127.0.0.1", //主机名127.0.0.1
-    https: false, //协议
-    open: true, //启动服务是否自动打开浏览器
+    port: 8888,
+    host: "localhost",
+    open: true,
+    https: false,
     proxy: {
+      //在 devServer 对象里设置跨域
       [process.env.VUE_APP_BASE_API]: {
+        // 代理标识, 如果出现了这个就代表需要代理
         target: process.env.VUE_APP_SERVICE_URL,
-        changeOrigin: true,
         pathRewrite: {
-          ["^" + process.env.VUE_APP_BASE_API]: "",
+          ["^" + process.env.VUE_APP_BASE_API]: "", // 重写路由, 把想替换掉的路由地址替换为空或者别的
         },
       },
-      // '/dev1-api': { // 代理标识, 如果出现了这个就代表需要代理
-      //   target: 'http://localhost:3000',
-      //   changeOrigin:true,
-      //   pathRewrite: {
-      //     "^/dev1-api": ''
-      //   }
-      // }
     },
   },
   lintOnSave: false, //关闭严格检查

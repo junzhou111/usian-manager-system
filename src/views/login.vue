@@ -21,6 +21,7 @@
   </div>
 </template>
 <script>
+import newdata from "../api/text";
 export default {
   name: "App",
   data() {
@@ -29,34 +30,38 @@ export default {
         username: "",
         password: "",
       },
+      page: 1,
+      size: 10,
+      obj: {
+        birthday: "",
+        cardNum: "",
+        name: "",
+        payType: "",
+      },
     };
   },
   components: {},
-  methods: {
-    tolog() {
-        this.$axios({
-          url: process.env.VUE_APP_BASE_API + "/",
-          method: "GET",
-        })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      this.$axios
-        .post("http://vue.mengxuegu.com/pro-api/user/login", this.from)
-        .then((res) => {
-          console.log(res);
-          localStorage.setItem("token", res.data.data.token);
-
-          this.$router.push("/home");
-
-          console.log(11);
-        });
-    },
+  created() {
+    newdata
+      .getNewlist(this.page, this.size, this.obj)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    newdata
+      .getNewgongying()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
-  watch: {},
+  methods: {
+    tolog() {},
+  },
   computed: {},
 };
 </script>

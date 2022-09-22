@@ -14,31 +14,18 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import axios from "axios"
+import HelloWorld from "@/components/HelloWorld.vue";
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   components: {
-    HelloWorld
+    HelloWorld,
   },
-  created() {
-    this.$axios({
-      url: '/dev-api/',
-      method: "GET"
-    }).then(res => {
-      console.log(res);
-    }).catch(err => {
-      console.log(err);
-    })
-  }
-}
+};
 </script>
 <style lang="scss">
 * {
   padding: 0;
   margin: 0;
-
 }
 
 .home-box {
@@ -57,19 +44,15 @@ export default {
     margin: 0 20px;
     line-height: 60px;
   }
-
 }
 
 .el-aside {
   background-color: #545c64;
   color: #fff;
-
 }
 
 .el-main {
   background-color: #fff;
   padding: 0 !important;
-
-
 }
 </style>
