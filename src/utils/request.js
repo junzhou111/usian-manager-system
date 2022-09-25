@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Message } from "element-ui";
+import store from "../store";
 // 自定义错误提示信息
 const excetionMessage = {
   1000: "用户名或者密码发生错误",
@@ -15,6 +16,10 @@ const service = axios.create({
 service.interceptors.request.use(
   function (config) {
     // 在发送请求之前做些什么
+    // 获取vuex的token
+    const token = store.state.token;
+    // 当token存在时将token通过请求头的方式发送给后台
+    if (token) config.headers.authorization = "Bearer" + token;
     return config;
   },
   function (error) {

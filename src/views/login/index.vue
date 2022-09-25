@@ -22,7 +22,7 @@
 </template>
 <script>
 import newdata from "../../api/text";
-import { login } from "../../api/user";
+import { login, getUserInfo } from "../../api/user";
 export default {
   name: "App",
   data() {
@@ -59,6 +59,17 @@ export default {
         const response = await login(this.form);
         console.log(response);
         console.log("token", response.token);
+        // 将token存到vuex本地
+        this.$store.dispatch("dissetToken", response.token);
+        // 调用获取用户登录信息
+        const userInfo = await getUserInfo();
+        console.log("userInfo", getUserInfo);
+        // 将用户信息存储到vuex及本地
+        this.$store.dispatch("dissetUserInfo", userInfo);
+        // 登陆成功提示
+        this.$message.success("登陆成功");
+        // 跳转到主页
+        this.$router.push("/");
       } catch (e) {
         console.log(e.message);
       }

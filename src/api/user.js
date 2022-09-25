@@ -8,3 +8,11 @@ export const login = (data = {}) => {
     data,
   });
 };
+
+// 获取登录信息接口
+export const getUserInfo =()=>{
+  return request ({
+    url:'/admin/getUserInfo',
+    method:'GET'
+  })
+}
