@@ -1,5 +1,21 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div>
+    <ul>
+      <li>12</li>
+    </ul>
   </div>
 </template>
+<script>
+export default {
+  name: "App",
+  data() {
+    return {};
+  },
+  components: {},
+  methods: {},
+  watch: {},
+  computed: {},
+};
+</script>
+<style lang='scss'>
+</style>
