@@ -3,36 +3,26 @@
     <div class="login-box">
       <div class="box">
         <h1 class="tilte">积云后台管理</h1>
-        <el-form ref="form" :model="form" label-width="60px">
-          <el-form-item label="账号">
-            <el-input v-model="form.username"></el-input>
+        <el-form ref="form" :model="form" label-width="60px" :rules="rules">
+          <el-form-item label="账号" prop="username">
+            <el-input v-model.trim="form.username"></el-input>
           </el-form-item>
-          <el-form-item label="密码">
-            <el-input v-model="form.password"></el-input>
+          <el-form-item label="密码" prop="password">
+            <el-input v-model.trim="form.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary">取消</el-button>
+            <el-button type="primary" @click="handleLoginSubmit"
+              >登录</el-button
+            >
           </el-form-item>
         </el-form>
-        <!-- <input
-          class="username"
-          type="text"
-          v-model="from.username"
-          placeholder="username"
-        />
-        <input
-          class="password"
-          type="text"
-          v-model="from.password"
-          placeholder="password"
-        />
-        <button class="btn" @click="tolog">登录</button> -->
       </div>
     </div>
   </div>
 </template>
 <script>
 import newdata from "../../api/text";
+import { login } from "../../api/user";
 export default {
   name: "App",
   data() {
@@ -41,42 +31,40 @@ export default {
         username: "",
         password: "",
       },
-      // from: {
-      //   username: "",
-      //   password: "",
-      // },
-      page: 1,
-      size: 10,
-      obj: {
-        birthday: "",
-        cardNum: "",
-        name: "",
-        payType: "",
+      rules: {
+        username: [
+          { required: true, message: "账号不能为空", trigger: "blur" },
+          { min: 3, max: 12, message: "请输入3-12个字符", trigger: "blur" },
+        ],
+        password: [
+          { required: true, message: "密码不能为空", trigger: "blur" },
+        ],
       },
     };
   },
   components: {},
-  created() {
-    newdata
-      .getNewlist(this.page, this.size, this.obj)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    newdata
-      .getNewgongying()
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
+  created() {},
   methods: {
-    tolog() {},
+    // 点击登录
+    handleLoginSubmit() {
+      // 对表单进行校验
+      this.$refs["form"].validate((valid) => {
+        if (!valid) return;
+        this.handleLogin();
+      });
+    },
+    // 登陆效果
+    async handleLogin() {
+      try {
+        const response = await login(this.form);
+        console.log(response);
+        console.log("token", response.token);
+      } catch (e) {
+        console.log(e.message);
+      }
+    },
   },
+
   computed: {},
 };
 </script>
@@ -112,7 +100,6 @@ export default {
       width: 80%;
       margin: 0 auto;
       height: 100%;
-      
     }
 
     .username,

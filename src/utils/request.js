@@ -1,4 +1,11 @@
 import axios from "axios";
+import { Message } from "element-ui";
+// 自定义错误提示信息
+const excetionMessage = {
+  1000: "用户名或者密码发生错误",
+  2000: "xxx发生错误",
+  3000: "",
+};
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -19,6 +26,16 @@ service.interceptors.request.use(
 // 添加响应拦截器
 service.interceptors.response.use(
   function (response) {
+    if (response.status === 200) {
+      return response.data.data;
+    }
+    if (response.status === 401) {
+      // 对token进行一个过期处理
+      return;
+    }
+    // 错误异常处理
+    _showError(response.data.code, response.data.message);
+
     // 对响应数据做点什么
     return response;
   },
@@ -27,5 +44,10 @@ service.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+const _showError = (errorCode, message) => {
+  let title;
+  title = excetionMessage[errorCode] || message || "发生未知错误";
+  Message.error(title);
+};
 
 export default service;
