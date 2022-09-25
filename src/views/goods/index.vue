@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <ul>
-      <li>12</li>
-    </ul>
-  </div>
+  <div>商品管理</div>
 </template>
 <script>
 export default {
